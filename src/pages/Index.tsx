@@ -13,7 +13,7 @@ const PORTRAIT_ALT = "Seu Nome";
 const BANNERS = [
   { image: banner1, alt: "Banner Evento 1", href: "https://forms.gle/Grsu6CoTUivcqoXn9" },
   { image: banner2, alt: "Banner Evento 2", href: "https://chat.whatsapp.com/Lj91Ff86zJ49VYThRcDMeE" },
-  { image: banner3, alt: "Banner Evento 3", href: "https://go.hotmart.com/B104303263J" },
+  { image: banner3, alt: "Banner Evento 3", href: "https://pay.hotmart.com/P104168076T" },
 ];
 
 const FOOTER = {
