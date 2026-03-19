@@ -36,22 +36,20 @@ const Index = () => {
         <img
           src={PORTRAIT_IMAGE}
           alt={PORTRAIT_ALT}
-          className="w-full h-full object-cover object-top"
+          className="w-full h-full object-cover object-center"
         />
-        {/* Dark gradient overlay fading to the right */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to right, transparent 60%, hsl(220, 15%, 8%) 100%)",
+              "linear-gradient(to right, transparent 50%, hsl(220, 15%, 8%) 100%)",
           }}
         />
-        {/* Subtle top/bottom vignette */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to bottom, hsl(220,15%,8%,0.3) 0%, transparent 20%, transparent 80%, hsl(220,15%,8%,0.5) 100%)",
+              "linear-gradient(to bottom, hsl(220,15%,8%,0.2) 0%, transparent 20%, transparent 80%, hsl(220,15%,8%,0.4) 100%)",
           }}
         />
       </div>
