@@ -12,19 +12,15 @@ const PORTRAIT_IMAGE = portraitImage;
 const PORTRAIT_ALT = "Seu Nome";
 
 const BANNERS = [
-  { image: banner1, alt: "Banner Evento 1", href: "#link1" },
-  { image: banner2, alt: "Banner Evento 2", href: "#link2" },
-  { image: banner3, alt: "Banner Evento 3", href: "#link3" },
-  { image: banner4, alt: "Banner Evento 4", href: "#link4" },
+  { image: banner1, alt: "Banner Evento 1", href: "https://forms.gle/Grsu6CoTUivcqoXn9" },
+  { image: banner2, alt: "Banner Evento 2", href: "https://chat.whatsapp.com/Lj91Ff86zJ49VYThRcDMeE" },
+  { image: banner3, alt: "Banner Evento 3", href: "https://go.hotmart.com/B104303263J" },
 ];
 
 const FOOTER = {
-  companyName: "SUA EMPRESA LTDA",
-  cnpj: "00.000.000/0001-00",
-  city: "SUA CIDADE/UF",
-  phone: "(00) 0000-0000",
-  devName: "Seu Desenvolvedor",
-  devLink: "#",
+  companyName: "FORJA ACELERADORA EMPRESARIAL",
+  cnpj: "50.491.514/0001-65",
+  devName: "FORJA",
 };
 // ====================================================
 
