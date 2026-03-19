@@ -87,19 +87,10 @@ const Index = () => {
               {FOOTER.companyName}
             </span>{" "}
             – {FOOTER.cnpj}
-            <br />
-            {FOOTER.city} – {FOOTER.phone}
           </div>
           <div>
             Desenvolvido por{" "}
-            <a
-              href={FOOTER.devLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary hover:underline"
-            >
-              {FOOTER.devName}
-            </a>
+            <span className="text-primary">{FOOTER.devName}</span>
           </div>
         </footer>
       </div>
