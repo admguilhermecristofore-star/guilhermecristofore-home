@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Forjados — Pare de ser o maior funcionário da sua própria empresa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: #010A1F; color: #FAFAFF; }
+  a { text-decoration: none; color: inherit; }
+
+  /* ── LAYOUT ── */
+  .section { width: 100%; padding: 80px 20px; }
+  .inner { max-width: 680px; margin: 0 auto; text-align: center; }
+  .inner--wide { max-width: 880px; margin: 0 auto; text-align: center; }
+
+  /* ── CORES ── */
+  .bg-navy   { background: #010A1F; }
+  .bg-navy2  { background: #00081A; }
+  .bg-yellow { background: #FFDB00; }
+  .bg-white  { background: #FFFFFF; }
+  .bg-offwhite { background: #FAFAFF; }
+
+  /* ── TIPOGRAFIA ── */
+  .h2 {
+    font-size: clamp(26px, 5.5vw, 46px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: #FAFAFF;
+  }
+  .h2--dark { color: #010A1F; }
+  .body-text {
+    font-size: clamp(15px, 2.5vw, 17px);
+    line-height: 1.75;
+    color: rgba(250,250,255,.85);
+  }
+  .body-text--dark { color: #333; }
+  .body-text p + p { margin-top: 12px; }
+  .gold { color: #FFDB00; }
+  .underline-gold { border-bottom: 3px solid #FFDB00; padding-bottom: 2px; }
+  .gap-sm { height: 14px; display: block; }
+  .gap-md { height: 24px; display: block; }
+  .gap-lg { height: 40px; display: block; }
+
+  /* ── BOTÃO ── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(236deg, #14CE04 0%, #0A6802 100%);
+    color: #ffffff !important;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(15px, 3vw, 18px);
+    font-weight: 700;
+    border-radius: 200px;
+    padding: 18px 52px;
+    border: none;
+    cursor: pointer;
+    transition: filter .2s, transform .2s;
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+  }
+  .btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
+  .btn--dark {
+    background: #010A1F !important;
+    color: #FFDB00 !important;
+  }
+  .btn-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(180deg, rgba(1,10,31,0.55) 0%, rgba(1,10,31,0.88) 100%),
+                url('guilherme-hero.jpg') center center / cover no-repeat;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero__logo { margin-bottom: 32px; }
+  .hero__logo img { max-height: 60px; margin: 0 auto; }
+  .hero__logo-text {
+    font-size: 22px; font-weight: 800;
+    letter-spacing: 7px; text-transform: uppercase;
+    color: #FFDB00;
+  }
+  .hero h1 {
+    font-size: clamp(30px, 6vw, 52px);
+    font-weight: 800; line-height: 1.08;
+    letter-spacing: -0.5px; color: #FAFAFF;
+    max-width: 620px; margin: 0 auto 20px;
+  }
+  .hero__sub {
+    font-size: clamp(15px, 3vw, 19px);
+    line-height: 1.65;
+    color: rgba(250,250,255,.88);
+    max-width: 560px;
+    margin: 0 auto 32px;
+  }
+  .microcopy { font-size: 13px; color: #FFDB00; font-weight: 600; }
+  .pulse-wrap { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: rgba(250,250,255,.6); margin-top: 18px; }
+  .pulse { width: 9px; height: 9px; border-radius: 50%; background: #14CE04; animation: pulse 1.5s infinite; flex-shrink: 0; }
+  @keyframes pulse { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:.5; transform:scale(1.4); } }
+
+  /* ── PHOTO PLACEHOLDER ── */
+  .photo-placeholder {
+    width: 100%; max-width: 360px; margin: 0 auto;
+    aspect-ratio: 3/4;
+    background: rgba(255,255,255,.07);
+    border-radius: 20px;
+    border: 2px dashed rgba(255,219,0,.3);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 8px; color: rgba(255,219,0,.5);
+    font-size: 13px; text-align: center; padding: 20px;
+  }
+  .photo-placeholder .icon { font-size: 36px; }
+  .photo-real {
+    width: 100%; max-width: 360px; margin: 0 auto;
+    border-radius: 20px; overflow: hidden;
+    aspect-ratio: 3/4; object-fit: cover;
+    display: block;
+  }
+
+  /* ── GRID 2 COL ── */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; text-align: left; }
+  @media(max-width:600px){ .grid2 { grid-template-columns: 1fr; } }
+
+  /* ── CARDS ── */
+  .card-dark {
+    border-radius: 16px; padding: 24px;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,219,0,.2);
+    text-align: left;
+  }
+  .card-light {
+    background: #F5F5F5;
+    border-radius: 16px; padding: 24px;
+    text-align: left;
+  }
+  .card-step {
+    display: flex; gap: 18px; align-items: flex-start;
+    background: rgba(255,255,255,.05);
+    border-left: 3px solid #FFDB00;
+    border-radius: 12px; padding: 20px 22px;
+    text-align: left;
+  }
+  .card-step--white {
+    background: #F9F9FF;
+    border-left: 4px solid #FFDB00;
+    border-radius: 12px;
+    display: flex; gap: 18px; align-items: flex-start;
+    padding: 20px 22px; text-align: left;
+  }
+  .step-num { font-size: 26px; font-weight: 800; color: #FFDB00; flex-shrink: 0; line-height: 1; }
+  .step-num--dark { color: #FFDB00; }
+
+  /* ── CHECKLIST ── */
+  .check-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .check-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; line-height: 1.5; }
+  .ci { width: 22px; height: 22px; border-radius: 50%; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .ci-x  { background: #ffe0e0; color: #d63031; }
+  .ci-ok { background: rgba(20,206,4,.15); color: #14CE04; }
+
+  /* ── PILL LIST (para quem é) ── */
+  .pill-list { list-style: none; display: flex; flex-direction: column; gap: 12px; text-align: left; }
+  .pill-list li { display: flex; align-items: center; gap: 12px; background: #FFDB00; border-radius: 200px; padding: 13px 24px; font-size: 15px; font-weight: 600; color: #010A1F; }
+  .pill-mark { font-weight: 800; flex-shrink: 0; }
+
+  /* ── STACK LIST ── */
+  .stack-list { list-style: none; display: flex; flex-direction: column; gap: 13px; text-align: left; }
+  .stack-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: #FAFAFF; line-height: 1.5; }
+  .stack-dot { color: #FFDB00; font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── PRICE ── */
+  .price-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media(max-width:580px){ .price-wrap { grid-template-columns: 1fr; } }
+  .price-card {
+    border-radius: 20px; padding: 32px 22px;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,219,0,.3);
+    position: relative; overflow: hidden;
+  }
+  .price-card--hl { background: #FFDB00; border: 2px solid #FFDB00; }
+  .pc-badge { position: absolute; top: 12px; right: 12px; background: #010A1F; color: #FFDB00; font-size: 10px; font-weight: 800; letter-spacing: 1px; padding: 4px 10px; border-radius: 200px; }
+  .pc-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; color: rgba(255,255,255,.5); }
+  .price-card--hl .pc-label { color: rgba(1,10,31,.6); }
+  .pc-price { display: flex; align-items: flex-end; gap: 2px; }
+  .pc-currency { font-size: 18px; font-weight: 700; margin-bottom: 10px; color: #fff; }
+  .price-card--hl .pc-currency { color: #010A1F; }
+  .pc-big { font-size: clamp(72px, 14vw, 96px); font-weight: 800; line-height: 1; color: #fff; }
+  .price-card--hl .pc-big { color: #010A1F; }
+  .pc-period { font-size: 16px; font-weight: 600; margin-bottom: 10px; color: rgba(255,255,255,.7); }
+  .price-card--hl .pc-period { color: rgba(1,10,31,.7); }
+  .pc-desc { font-size: 13px; line-height: 1.5; margin: 10px 0 20px; color: rgba(255,255,255,.5); }
+  .price-card--hl .pc-desc { color: rgba(1,10,31,.6); }
+
+  /* ── FAQ ── */
+  .faq-item { background: #fff; border-radius: 12px; margin-bottom: 10px; border: 1px solid rgba(1,10,31,.08); overflow: hidden; }
+  .faq-q { width: 100%; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600; color: #010A1F !important; text-align: left; gap: 12px; }
+  .faq-arrow { font-size: 18px; transition: transform .25s; flex-shrink: 0; color: #010A1F; }
+  .faq-q.open .faq-arrow { transform: rotate(180deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; font-size: 14px; color: #444 !important; line-height: 1.65; padding: 0 22px; }
+  .faq-a.open { max-height: 300px; padding: 0 22px 18px; }
+
+  /* ── GARANTIA ── */
+  .guarantee-icon { width: 72px; height: 72px; border-radius: 50%; background: #010A1F; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 24px; }
+
+  @media(max-width:640px){
+    .section { padding: 60px 18px; }
+    .btn { padding: 16px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ 1. HERO ══════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero__logo">
+    <img src="logo-forjados.png" alt="Forjados" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+    <span class="hero__logo-text" style="display:none;">FORJADOS</span>
+  </div>
+  <h1>Pare de ser o <span class="gold">maior funcionário</span> da sua própria empresa.</h1>
+  <p class="hero__sub">
+    Entre nos Forjados e construa uma liderança que aguenta o tranco, tira você do apaga-incêndio e faz a operação andar sem depender de você em tudo.
+  </p>
+  <div class="btn-wrap">
+    <a href="https://pay.hotmart.com/S105668941Q?off=oicxzour" target="_blank" class="btn">Quero ficar livre do operacional</a>
+    <span class="microcopy">Preço de fundador liberado!</span>
+  </div>
+  <div class="pulse-wrap">
+    <span class="pulse"></span>
+    Acesso imediato &nbsp;·&nbsp; 100% online
+  </div>
+</section>
+
+<!-- ══ 2. DOR ════════════════════════════════════════════ -->
+<section class="section bg-yellow">
+  <div class="inner">
+    <h2 class="h2 h2--dark">Se tudo volta para você, a empresa ainda está nas suas costas.</h2>
+    <span class="gap-md"></span>
+    <div class="body-text" style="color:#010A1F;">
+      <p>Você decide tudo. Resolve tudo. Cobra tudo. Refaz tudo.</p>
+      <p>Quando alguém erra, você entra.</p>
+      <p>Quando o cliente chama, você entra.</p>
+      <p>Quando a operação trava, você entra.</p>
+      <p><strong>E no fim do dia ainda tenta chamar isso de empreender.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 3. VIRADA ═════════════════════════════════════════ -->
+<section class="section bg-navy">
+  <div class="inner">
+    <h2 class="h2">Quem improvisa, <span class="gold">paga.</span></h2>
+    <span class="gap-md"></span>
+    <div class="body-text">
+      <p>O problema não é trabalhar muito.</p>
+      <p>O problema é sua presença ter virado o processo.</p>
+      <p>Toda decisão empurrada vira incêndio.</p>
+      <p>Toda conversa evitada vira problema.</p>
+      <p>Toda delegação mal feita volta para o seu colo.</p>
+    </div>
+    <span class="gap-lg"></span>
+    <div class="btn-wrap">
+      <a href="https://pay.hotmart.com/S105668941Q?off=oicxzour" target="_blank" class="btn">Quero parar de improvisar</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 4. ANTES E DEPOIS ══════════════════════════════════ -->
+<section class="section bg-white">
+  <div class="inner--wide">
+    <h2 class="h2 h2--dark">De dono no improviso para <span class="underline-gold">dono forjado.</span></h2>
+    <span class="gap-lg"></span>
+    <div class="grid2">
+      <div class="card-light">
+        <h3 style="color:#aaa;font-size:16px;font-weight:700;margin-bottom:18px;">Dono no improviso</h3>
+        <ul class="check-list">
+          <li><span class="ci ci-x">✕</span><span style="color:#555;">Decide no susto.</span></li>
+          <li><span class="ci ci-x">✕</span><span style="color:#555;">Cobra no grito ou tarde demais.</span></li>
+          <li><span class="ci ci-x">✕</span><span style="color:#555;">Centraliza porque "ninguém faz direito".</span></li>
+          <li><span class="ci ci-x">✕</span><span style="color:#555;">Vive apagando incêndio.</span></li>
+          <li><span class="ci ci-x">✕</span><span style="color:#555;">Confunde movimento com crescimento.</span></li>
+          <li><span class="ci ci-x">✕</span><span style="color:#555;">Tem time, mas continua sendo o gargalo.</span></li>
+        </ul>
+      </div>
+      <div class="card-dark" style="background:#010A1F;">
+        <h3 class="gold" style="font-size:16px;font-weight:700;margin-bottom:18px;">Dono forjado</h3>
+        <ul class="check-list">
+          <li><span class="ci ci-ok">✓</span><span style="color:#FAFAFF;">Decide com critério.</span></li>
+          <li><span class="ci ci-ok">✓</span><span style="color:#FAFAFF;">Comunica o que espera e o que cobra.</span></li>
+          <li><span class="ci ci-ok">✓</span><span style="color:#FAFAFF;">Delega com clareza.</span></li>
+          <li><span class="ci ci-ok">✓</span><span style="color:#FAFAFF;">Resolve a causa, não só o fogo.</span></li>
+          <li><span class="ci ci-ok">✓</span><span style="color:#FAFAFF;">Cria processo simples.</span></li>
+          <li><span class="ci ci-ok">✓</span><span style="color:#FAFAFF;">Lidera sem precisar estar em tudo.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 5. APRESENTAÇÃO ════════════════════════════════════ -->
+<section class="section bg-navy">
+  <div class="inner">
+    <h2 class="h2">Conheça os <span class="gold">Forjados.</span></h2>
+    <span class="gap-md"></span>
+    <div class="body-text">
+      <p>Uma comunidade de construção de liderança para quem tem ou quer ter um negócio e decidiu parar de ser apagador de incêndio.</p>
+      <p>Aqui não tem guru em palco, teoria bonita ou grupo barulhento.</p>
+      <p>É o Guilherme Cristofore mostrando, na prática, o que funcionou, o que quebrou e o que ele faria diferente para construir uma liderança de verdade.</p>
+    </div>
+    <span class="gap-lg"></span>
+    <div class="btn-wrap">
+      <a href="https://pay.hotmart.com/S105668941Q?off=oicxzour" target="_blank" class="btn">Entrar nos Forjados</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 6. MOVIMENTO ══════════════════════════════════════ -->
+<section class="section bg-yellow">
+  <div class="inner">
+    <h2 class="h2 h2--dark">Menos empresário-herói.<br><span style="border-bottom:4px solid #010A1F;">Mais dono de verdade.</span></h2>
+    <span class="gap-md"></span>
+    <div class="body-text" style="color:#010A1F;">
+      <p>O Forjados não existe para romantizar o caos.</p>
+      <p>Existe para reunir gente que cansou de carregar tudo sozinha e decidiu construir empresa com mais clareza, processo e liderança.</p>
+      <p>Não é sobre ter o negócio perfeito.</p>
+      <p><strong>É sobre parar de esperar permissão e começar a fazer melhor que perfeito.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 7. O QUE VOCÊ RECEBE ══════════════════════════════ -->
+<section class="section bg-white">
+  <div class="inner--wide">
+    <h2 class="h2 h2--dark">Um ritmo simples para você construir <span class="underline-gold">liderança toda semana.</span></h2>
+    <span class="gap-lg"></span>
+    <div class="grid2">
+      <div class="card-dark">
+        <span style="font-size:11px;font-weight:800;letter-spacing:2px;color:#FFDB00;text-transform:uppercase;display:block;margin-bottom:10px;">01</span>
+        <h3 style="color:#FAFAFF;font-size:17px;font-weight:700;margin-bottom:8px;">Forjado da Semana</h3>
+        <p style="font-size:14px;color:rgba(250,250,255,.72);line-height:1.65;">1 conteúdo gravado por semana, de 15 a 25 minutos, para resolver situações reais de liderança, delegação, decisão e operação.</p>
+      </div>
+      <div class="card-dark">
+        <span style="font-size:11px;font-weight:800;letter-spacing:2px;color:#FFDB00;text-transform:uppercase;display:block;margin-bottom:10px;">02</span>
+        <h3 style="color:#FAFAFF;font-size:17px;font-weight:700;margin-bottom:8px;">Brasa do Dia</h3>
+        <p style="font-size:14px;color:rgba(250,250,255,.72);line-height:1.65;">Áudios curtos, direto no WhatsApp, com uma provocação ou ferramenta rápida para o dia do dono.</p>
+      </div>
+      <div class="card-dark">
+        <span style="font-size:11px;font-weight:800;letter-spacing:2px;color:#FFDB00;text-transform:uppercase;display:block;margin-bottom:10px;">03</span>
+        <h3 style="color:#FAFAFF;font-size:17px;font-weight:700;margin-bottom:8px;">Caso na Bigorna</h3>
+        <p style="font-size:14px;color:rgba(250,250,255,.72);line-height:1.65;">Uma vez por mês, o Guilherme disseca ao vivo um caso real de membro: empresa real, problema real, caminho real.</p>
+      </div>
+      <div class="card-dark">
+        <span style="font-size:11px;font-weight:800;letter-spacing:2px;color:#FFDB00;text-transform:uppercase;display:block;margin-bottom:10px;">04</span>
+        <h3 style="color:#FAFAFF;font-size:17px;font-weight:700;margin-bottom:8px;">Templates Anti-Caos</h3>
+        <p style="font-size:14px;color:rgba(250,250,255,.72);line-height:1.65;">7 ferramentas práticas para delegação, feedback, onboarding, decisão, reunião e organização da operação.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 8. POR QUE FUNCIONA ════════════════════════════════ -->
+<section class="section bg-navy">
+  <div class="inner">
+    <h2 class="h2 gold">A Forja Anti-Caos.</h2>
+    <span class="gap-sm"></span>
+    <p class="body-text" style="color:rgba(250,250,255,.65);">O Forjados tira você do improviso em 3 movimentos:</p>
+    <span class="gap-lg"></span>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div class="card-step">
+        <span class="step-num">1</span>
+        <div>
+          <h3 style="color:#FAFAFF;font-size:17px;font-weight:700;margin-bottom:6px;">Liderar melhor</h3>
+          <p style="font-size:15px;color:rgba(250,250,255,.72);line-height:1.65;">Comunicar, cobrar, decidir e parar de estar presente em tudo.</p>
+        </div>
+      </div>
+      <div class="card-step">
+        <span class="step-num">2</span>
+        <div>
+          <h3 style="color:#FAFAFF;font-size:17px;font-weight:700;margin-bottom:6px;">Resolver o que ficou para trás</h3>
+          <p style="font-size:15px;color:rgba(250,250,255,.72);line-height:1.65;">Olhar para buracos financeiros, operacionais e de gente sem fingir que eles não existem.</p>
+        </div>
+      </div>
+      <div class="card-step">
+        <span class="step-num">3</span>
+        <div>
+          <h3 style="color:#FAFAFF;font-size:17px;font-weight:700;margin-bottom:6px;">Construir de verdade</h3>
+          <p style="font-size:15px;color:rgba(250,250,255,.72);line-height:1.65;">Criar processo, delegar com clareza e montar uma operação que não depende do grito.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 9. PRIMEIROS PASSOS ════════════════════════════════ -->
+<section class="section bg-white">
+  <div class="inner">
+    <h2 class="h2 h2--dark">Você não entra para ficar perdido.</h2>
+    <span class="gap-sm"></span>
+    <p class="body-text body-text--dark">No primeiro acesso, você já sabe por onde começar:</p>
+    <span class="gap-lg"></span>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="card-step--white">
+        <span style="width:32px;height:32px;border-radius:50%;background:#FFDB00;color:#010A1F;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</span>
+        <span style="font-size:15px;color:#222;">Entra na área de membros</span>
+      </div>
+      <div class="card-step--white">
+        <span style="width:32px;height:32px;border-radius:50%;background:#FFDB00;color:#010A1F;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</span>
+        <span style="font-size:15px;color:#222;">Recebe os Templates Anti-Caos</span>
+      </div>
+      <div class="card-step--white">
+        <span style="width:32px;height:32px;border-radius:50%;background:#FFDB00;color:#010A1F;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</span>
+        <span style="font-size:15px;color:#222;">Acompanha a primeira Brasa do Dia</span>
+      </div>
+      <div class="card-step--white">
+        <span style="width:32px;height:32px;border-radius:50%;background:#FFDB00;color:#010A1F;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</span>
+        <span style="font-size:15px;color:#222;">Assiste ao Forjado da Semana</span>
+      </div>
+      <div class="card-step--white">
+        <span style="width:32px;height:32px;border-radius:50%;background:#FFDB00;color:#010A1F;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">5</span>
+        <span style="font-size:15px;color:#222;">Escolhe um ponto da operação para ajustar primeiro</span>
+      </div>
+    </div>
+    <span class="gap-lg"></span>
+    <div style="background:#010A1F;border-radius:16px;padding:22px 24px;">
+      <p style="font-weight:700;font-size:17px;color:#FFDB00;line-height:1.5;">O objetivo não é consumir mais conteúdo. É tirar peso das suas costas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 10. PARA QUEM É ════════════════════════════════════ -->
+<section class="section bg-navy">
+  <div class="inner">
+    <h2 class="h2">É para você <span class="gold">se…</span></h2>
+    <span class="gap-lg"></span>
+    <ul class="pill-list">
+      <li><span class="pill-mark">✓</span> Está começando e quer construir certo desde o início.</li>
+      <li><span class="pill-mark">✓</span> Está recomeçando depois de um erro, uma sociedade ruim ou um negócio que não foi.</li>
+      <li><span class="pill-mark">✓</span> Já tem empresa, mas ainda carrega tudo sozinho.</li>
+      <li><span class="pill-mark">✓</span> Vive apagando incêndio e quer virar dono de verdade.</li>
+      <li><span class="pill-mark">✓</span> Quer liderar melhor sem cair em papo corporativo vazio.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══ 11. PARA QUEM NÃO É ══════════════════════════════ -->
+<section class="section bg-navy2" style="padding:0;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;min-height:420px;">
+    <img src="guilherme-laptop.jpg" alt="Guilherme Cristofore" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"
+      onerror="this.style.display='none';this.parentElement.style.gridTemplateColumns='1fr';" />
+    <div style="display:flex;flex-direction:column;justify-content:center;padding:60px 40px;text-align:center;">
+      <h2 class="h2" style="font-size:clamp(22px,4vw,36px);margin-bottom:24px;">Não entre se você quer <span class="gold">só assistir conteúdo.</span></h2>
+      <div class="body-text">
+        <p>O Forjados não é para quem quer terceirizar responsabilidade.</p>
+        <p>Não é para quem quer motivação para aguentar mais caos.</p>
+        <p>Não é para quem quer parecer dono, mas fugir das conversas difíceis.</p>
+        <p style="font-weight:700;color:#FFDB00;">É para quem quer aplicar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+@media(max-width:640px){
+  #nao-e-grid { grid-template-columns: 1fr !important; }
+  #nao-e-grid img { max-height: 280px; }
+}
+</style>
+
+<!-- ══ 12. COMO FUNCIONA ══════════════════════════════════ -->
+<section class="section bg-white">
+  <div class="inner">
+    <h2 class="h2 h2--dark">Simples, direto e sem barulho.</h2>
+    <span class="gap-lg"></span>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div class="card-step--white">
+        <span class="step-num">01</span>
+        <div>
+          <h3 style="color:#010A1F;font-size:17px;font-weight:700;margin-bottom:6px;">Você entra</h3>
+          <p style="font-size:15px;color:#555;line-height:1.65;">Recebe acesso à área de membros na Hotmart Club e aos grupos do WhatsApp.</p>
+        </div>
+      </div>
+      <div class="card-step--white">
+        <span class="step-num">02</span>
+        <div>
+          <h3 style="color:#010A1F;font-size:17px;font-weight:700;margin-bottom:6px;">Você acompanha o ritmo</h3>
+          <p style="font-size:15px;color:#555;line-height:1.65;">Toda semana tem conteúdo. Todo dia tem Brasa. Todo mês tem caso real.</p>
+        </div>
+      </div>
+      <div class="card-step--white">
+        <span class="step-num">03</span>
+        <div>
+          <h3 style="color:#010A1F;font-size:17px;font-weight:700;margin-bottom:6px;">Você aplica</h3>
+          <p style="font-size:15px;color:#555;line-height:1.65;">O Guilherme entrega direção prática. Você aplica no ponto da empresa que está mais pesado agora.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 13. AUTORIDADE ════════════════════════════════════ -->
+<section class="section bg-navy" style="padding-bottom:0;">
+  <div class="inner">
+    <h2 class="h2">Com <span class="gold">Guilherme Cristofore.</span></h2>
+    <span class="gap-md"></span>
+    <div class="body-text">
+      <p>Guilherme empreende desde cedo, construiu empresas reais, errou em decisões reais e aprendeu liderança no lugar onde ela mais cobra: na prática.</p>
+      <p>Nos Forjados, ele não fala de cima do palco.</p>
+      <p>Ele senta do seu lado e mostra o que fez, o que não faria de novo e como você pode evitar pagar caro por erros que já foram pagos antes.</p>
+    </div>
+  </div>
+  <!-- Fotos em grid abaixo do texto -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:48px;max-height:520px;overflow:hidden;">
+    <img src="guilherme-sofa.jpg" alt="Guilherme Cristofore" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"
+      onerror="this.style.display='none';" />
+    <img src="guilherme-autoridade.jpg" alt="Guilherme Cristofore" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"
+      onerror="this.style.display='none';" />
+  </div>
+</section>
+
+<!-- ══ 14+15. OFERTA + STACK ══════════════════════════════ -->
+<section class="section bg-navy">
+  <div class="inner--wide">
+    <h2 class="h2">Entre como <span class="gold">fundador dos Forjados.</span></h2>
+    <span class="gap-sm"></span>
+    <p class="body-text" style="color:rgba(255,255,255,.45);">Depois da janela de fundador, o mensal passa para R$ 37/mês.</p>
+    <span class="gap-lg"></span>
+
+    <!-- Stack -->
+    <div class="card-dark" style="margin-bottom:28px;text-align:left;">
+      <p style="font-weight:700;font-size:17px;color:#FFDB00;margin-bottom:18px;">Ao entrar, você recebe:</p>
+      <ul class="stack-list">
+        <li><span class="stack-dot">✦</span> 4 conteúdos gravados por mês.</li>
+        <li><span class="stack-dot">✦</span> Áudios com dicas aplicáveis.</li>
+        <li><span class="stack-dot">✦</span> 1 caso real dissecado por mês.</li>
+        <li><span class="stack-dot">✦</span> 7 Templates Anti-Caos.</li>
+        <li><span class="stack-dot">✦</span> Comunidade guiada no WhatsApp.</li>
+        <li><span class="stack-dot">✦</span> Área de membros na Hotmart Club.</li>
+        <li><span class="stack-dot">✦</span> Direção prática do Guilherme para liderança, delegação e operação.</li>
+      </ul>
+    </div>
+
+    <!-- Preços -->
+    <div class="price-wrap">
+      <div class="price-card">
+        <span class="pc-label">Plano mensal</span>
+        <div class="pc-price">
+          <span class="pc-currency">R$</span>
+          <span class="pc-big">27</span>
+          <span class="pc-period">/mês</span>
+        </div>
+        <p class="pc-desc">Para começar agora e testar a cadência da comunidade.</p>
+        <a href="https://pay.hotmart.com/S105668941Q?off=oicxzour" target="_blank" class="btn" style="font-size:15px;padding:14px 28px;">Entrar no mensal</a>
+      </div>
+      <div class="price-card price-card--hl">
+        <span class="pc-badge">MAIS VANTAJOSO</span>
+        <span class="pc-label">Plano anual</span>
+        <div class="pc-price">
+          <span class="pc-currency">R$</span>
+          <span class="pc-big">197</span>
+          <span class="pc-period">/ano</span>
+        </div>
+        <p class="pc-desc">Para quem já decidiu construir liderança pelos próximos 12 meses.</p>
+        <a href="https://pay.hotmart.com/S105668941Q" target="_blank" class="btn btn--dark" style="font-size:15px;padding:14px 28px;max-width:100%;">Entrar no anual</a>
+      </div>
+    </div>
+
+    <span class="gap-lg"></span>
+    <div class="btn-wrap">
+      <a href="https://pay.hotmart.com/S105668941Q?off=oicxzour" target="_blank" class="btn" style="font-size:18px;padding:20px 60px;">Quero soltar o piano</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 16. GARANTIA ══════════════════════════════════════ -->
+<section class="section bg-offwhite">
+  <div class="inner">
+    <div class="guarantee-icon">🛡️</div>
+    <h2 class="h2 h2--dark">Entre, veja por dentro e decida com calma.</h2>
+    <span class="gap-md"></span>
+    <div class="body-text body-text--dark">
+      <p>Você tem 7 dias para acessar a estrutura, conhecer a comunidade e sentir se o Forjados é para o seu momento.</p>
+      <p>Se não fizer sentido, basta pedir o cancelamento dentro do prazo.</p>
+      <p><strong style="color:#010A1F;">Sem teatro. Sem enrolação.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 17. FAQ ═══════════════════════════════════════════ -->
+<section class="section bg-offwhite" style="padding-top:0;">
+  <div class="inner--wide">
+    <h2 class="h2 h2--dark" style="margin-bottom:32px;">Perguntas frequentes</h2>
+    <div id="faq"></div>
+  </div>
+</section>
+
+<!-- ══ 18. CTA FINAL ═════════════════════════════════════ -->
+<section class="section" style="background:linear-gradient(180deg,#010A1F 0%,#000314 100%);padding:100px 20px;">
+  <div class="inner">
+    <!-- Logo -->
+    <div style="margin-bottom:28px;">
+      <img src="logo-forjados.png" alt="Forjados" style="max-height:50px;margin:0 auto;display:block;"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+      <span style="display:none;font-size:20px;font-weight:800;letter-spacing:7px;text-transform:uppercase;color:#FFDB00;">FORJADOS</span>
+    </div>
+    <h2 class="h2">O piano não vai ficar <span class="gold">mais leve sozinho.</span></h2>
+    <span class="gap-md"></span>
+    <div class="body-text">
+      <p>Se você continuar liderando no improviso, a empresa vai continuar dependendo demais de você.</p>
+      <p>Entre nos Forjados e comece a construir uma liderança que aguenta o tranco.</p>
+    </div>
+    <span class="gap-lg"></span>
+    <div class="btn-wrap">
+      <a href="https://pay.hotmart.com/S105668941Q?off=oicxzour" target="_blank" class="btn" style="font-size:18px;padding:22px 60px;">Quero soltar o piano</a>
+      <span style="font-size:13px;color:rgba(255,255,255,.4);">Preço de fundador: R$ 27/mês ou R$ 197/ano.</span>
+    </div>
+  </div>
+</section>
+
+<script>
+const faqs = [
+  { q: "O Forjados é um curso?", a: "Não. Ele tem conteúdos gravados, mas funciona como uma comunidade com cadência semanal, áudios diários em dias úteis, casos reais e ferramentas práticas." },
+  { q: "Preciso assistir ao vivo?", a: "Não. As entregas principais são gravadas para você consumir no seu ritmo." },
+  { q: "Não tenho tempo. Faz sentido para mim?", a: "Sim, porque a estrutura foi feita para ser leve: conteúdos de 15 a 25 minutos e áudios de até 3 minutos com dicas aplicáveis." },
+  { q: "Serve para quem está começando?", a: "Sim. Principalmente se você quer evitar construir tudo no improviso." },
+  { q: "Serve para quem já tem empresa?", a: "Sim. Principalmente se a empresa depende demais de você." },
+  { q: "Como funciona o WhatsApp?", a: "Os grupos são organizados para evitar barulho. A ideia não é ter conversa infinita. É receber direção e aplicar." },
+  { q: "Posso cancelar?", a: "Sim. O cancelamento segue as regras da plataforma de pagamento." },
+  { q: "O preço vai mudar?", a: "Sim. O preço de fundador fica disponível por 48 horas. Depois, o mensal passa para R$ 37/mês." },
+];
+const faqEl = document.getElementById('faq');
+faqs.forEach((f, i) => {
+  const d = document.createElement('div');
+  d.className = 'faq-item';
+  d.innerHTML = `<button class="faq-q" data-i="${i}">${f.q}<span class="faq-arrow">▾</span></button><div class="faq-a" data-a="${i}">${f.a}</div>`;
+  faqEl.appendChild(d);
+});
+faqEl.addEventListener('click', e => {
+  const btn = e.target.closest('.faq-q');
+  if (!btn) return;
+  const i = btn.dataset.i;
+  const ans = faqEl.querySelector(`.faq-a[data-a="${i}"]`);
+  const open = btn.classList.contains('open');
+  faqEl.querySelectorAll('.faq-q').forEach(b => b.classList.remove('open'));
+  faqEl.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+  if (!open) { btn.classList.add('open'); ans.classList.add('open'); }
+});
+</script>
+</body>
+</html>
