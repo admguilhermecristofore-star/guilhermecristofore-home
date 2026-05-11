@@ -277,7 +277,7 @@ export default function Forjados() {
                 {[
                   "Decide no susto.",
                   "Cobra no grito ou tarde demais.",
-                  "Centraliza porque "ninguém faz direito".",
+                  'Centraliza porque “ninguém faz direito”.',
                   "Vive apagando incêndio.",
                   "Confunde movimento com crescimento.",
                   "Tem time, mas continua sendo o gargalo.",
