@@ -9,7 +9,7 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { font-family: 'Inter', sans-serif; background: #010A1F; color: #FAFAFF; }
+  body { font-family: 'Inter', sans-serif; background: #000000; color: #FAFAFF; }
   a { text-decoration: none; color: inherit; }
 
   /* ── LAYOUT ── */
@@ -18,8 +18,8 @@
   .inner--wide { max-width: 880px; margin: 0 auto; text-align: center; }
 
   /* ── CORES ── */
-  .bg-navy   { background: #010A1F; }
-  .bg-navy2  { background: #00081A; }
+  .bg-navy   { background: #000000; }
+  .bg-navy2  { background: #000000; }
   .bg-yellow { background: #FFDB00; }
   .bg-white  { background: #FFFFFF; }
   .bg-offwhite { background: #FAFAFF; }
@@ -31,7 +31,7 @@
     line-height: 1.1;
     color: #FAFAFF;
   }
-  .h2--dark { color: #010A1F; }
+  .h2--dark { color: #000000; }
   .body-text {
     font-size: clamp(15px, 2.5vw, 17px);
     line-height: 1.75;
@@ -66,7 +66,7 @@
   }
   .btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
   .btn--dark {
-    background: #010A1F !important;
+    background: #000000 !important;
     color: #FFDB00 !important;
   }
   .btn-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
@@ -80,7 +80,7 @@
     justify-content: center;
     text-align: center;
     padding: 80px 20px;
-    background: linear-gradient(180deg, rgba(1,10,31,0.55) 0%, rgba(1,10,31,0.88) 100%),
+    background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.88) 100%),
                 url('guilherme-hero.jpg') center center / cover no-repeat;
     position: relative;
     overflow: hidden;
@@ -172,7 +172,7 @@
 
   /* ── PILL LIST (para quem é) ── */
   .pill-list { list-style: none; display: flex; flex-direction: column; gap: 12px; text-align: left; }
-  .pill-list li { display: flex; align-items: center; gap: 12px; background: #FFDB00; border-radius: 200px; padding: 13px 24px; font-size: 15px; font-weight: 600; color: #010A1F; }
+  .pill-list li { display: flex; align-items: center; gap: 12px; background: #FFDB00; border-radius: 200px; padding: 13px 24px; font-size: 15px; font-weight: 600; color: #000000; }
   .pill-mark { font-weight: 800; flex-shrink: 0; }
 
   /* ── STACK LIST ── */
@@ -190,29 +190,29 @@
     position: relative; overflow: hidden;
   }
   .price-card--hl { background: #FFDB00; border: 2px solid #FFDB00; }
-  .pc-badge { position: absolute; top: 12px; right: 12px; background: #010A1F; color: #FFDB00; font-size: 10px; font-weight: 800; letter-spacing: 1px; padding: 4px 10px; border-radius: 200px; }
+  .pc-badge { position: absolute; top: 12px; right: 12px; background: #000000; color: #FFDB00; font-size: 10px; font-weight: 800; letter-spacing: 1px; padding: 4px 10px; border-radius: 200px; }
   .pc-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; color: rgba(255,255,255,.5); }
-  .price-card--hl .pc-label { color: rgba(1,10,31,.6); }
+  .price-card--hl .pc-label { color: rgba(0,0,0,.6); }
   .pc-price { display: flex; align-items: flex-end; gap: 2px; }
   .pc-currency { font-size: 18px; font-weight: 700; margin-bottom: 10px; color: #fff; }
-  .price-card--hl .pc-currency { color: #010A1F; }
+  .price-card--hl .pc-currency { color: #000000; }
   .pc-big { font-size: clamp(72px, 14vw, 96px); font-weight: 800; line-height: 1; color: #fff; }
-  .price-card--hl .pc-big { color: #010A1F; }
+  .price-card--hl .pc-big { color: #000000; }
   .pc-period { font-size: 16px; font-weight: 600; margin-bottom: 10px; color: rgba(255,255,255,.7); }
-  .price-card--hl .pc-period { color: rgba(1,10,31,.7); }
+  .price-card--hl .pc-period { color: rgba(0,0,0,.7); }
   .pc-desc { font-size: 13px; line-height: 1.5; margin: 10px 0 20px; color: rgba(255,255,255,.5); }
-  .price-card--hl .pc-desc { color: rgba(1,10,31,.6); }
+  .price-card--hl .pc-desc { color: rgba(0,0,0,.6); }
 
   /* ── FAQ ── */
-  .faq-item { background: #fff; border-radius: 12px; margin-bottom: 10px; border: 1px solid rgba(1,10,31,.08); overflow: hidden; }
-  .faq-q { width: 100%; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600; color: #010A1F !important; text-align: left; gap: 12px; }
-  .faq-arrow { font-size: 18px; transition: transform .25s; flex-shrink: 0; color: #010A1F; }
+  .faq-item { background: #fff; border-radius: 12px; margin-bottom: 10px; border: 1px solid rgba(0,0,0,.08); overflow: hidden; }
+  .faq-q { width: 100%; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600; color: #000000 !important; text-align: left; gap: 12px; }
+  .faq-arrow { font-size: 18px; transition: transform .25s; flex-shrink: 0; color: #000000; }
   .faq-q.open .faq-arrow { transform: rotate(180deg); }
   .faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; font-size: 14px; color: #444 !important; line-height: 1.65; padding: 0 22px; }
   .faq-a.open { max-height: 300px; padding: 0 22px 18px; }
 
   /* ── GARANTIA ── */
-  .guarantee-icon { width: 72px; height: 72px; border-radius: 50%; background: #010A1F; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 24px; }
+  .guarantee-icon { width: 72px; height: 72px; border-radius: 50%; background: #000000; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 24px; }
 
   @media(max-width:640px){
     .section { padding: 60px 18px; }
@@ -247,7 +247,7 @@
   <div class="inner">
     <h2 class="h2 h2--dark">Se tudo volta para você, a empresa ainda está nas suas costas.</h2>
     <span class="gap-md"></span>
-    <div class="body-text" style="color:#010A1F;">
+    <div class="body-text" style="color:#000000;">
       <p>Você decide tudo. Resolve tudo. Cobra tudo. Refaz tudo.</p>
       <p>Quando alguém erra, você entra.</p>
       <p>Quando o cliente chama, você entra.</p>
@@ -293,7 +293,7 @@
           <li><span class="ci ci-x">✕</span><span style="color:#555;">Tem time, mas continua sendo o gargalo.</span></li>
         </ul>
       </div>
-      <div class="card-dark" style="background:#010A1F;">
+      <div class="card-dark" style="background:#000000;">
         <h3 class="gold" style="font-size:16px;font-weight:700;margin-bottom:18px;">Dono forjado</h3>
         <ul class="check-list">
           <li><span class="ci ci-ok">✓</span><span style="color:#FAFAFF;">Decide com critério.</span></li>
@@ -328,9 +328,9 @@
 <!-- ══ 6. MOVIMENTO ══════════════════════════════════════ -->
 <section class="section bg-yellow">
   <div class="inner">
-    <h2 class="h2 h2--dark">Menos empresário-herói.<br><span style="border-bottom:4px solid #010A1F;">Mais dono de verdade.</span></h2>
+    <h2 class="h2 h2--dark">Menos empresário-herói.<br><span style="border-bottom:4px solid #000000;">Mais dono de verdade.</span></h2>
     <span class="gap-md"></span>
-    <div class="body-text" style="color:#010A1F;">
+    <div class="body-text" style="color:#000000;">
       <p>O Forjados não existe para romantizar o caos.</p>
       <p>Existe para reunir gente que cansou de carregar tudo sozinha e decidiu construir empresa com mais clareza, processo e liderança.</p>
       <p>Não é sobre ter o negócio perfeito.</p>
@@ -411,28 +411,28 @@
     <span class="gap-lg"></span>
     <div style="display:flex;flex-direction:column;gap:12px;">
       <div class="card-step--white">
-        <span style="width:32px;height:32px;border-radius:50%;background:#FFDB00;color:#010A1F;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</span>
+        <span style="width:32px;height:32px;border-radius:50%;background:#FFDB00;color:#000000;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</span>
         <span style="font-size:15px;color:#222;">Entra na área de membros</span>
       </div>
       <div class="card-step--white">
-        <span style="width:32px;height:32px;border-radius:50%;background:#FFDB00;color:#010A1F;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</span>
+        <span style="width:32px;height:32px;border-radius:50%;background:#FFDB00;color:#000000;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</span>
         <span style="font-size:15px;color:#222;">Recebe os Templates Anti-Caos</span>
       </div>
       <div class="card-step--white">
-        <span style="width:32px;height:32px;border-radius:50%;background:#FFDB00;color:#010A1F;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</span>
+        <span style="width:32px;height:32px;border-radius:50%;background:#FFDB00;color:#000000;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</span>
         <span style="font-size:15px;color:#222;">Acompanha a primeira Brasa do Dia</span>
       </div>
       <div class="card-step--white">
-        <span style="width:32px;height:32px;border-radius:50%;background:#FFDB00;color:#010A1F;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</span>
+        <span style="width:32px;height:32px;border-radius:50%;background:#FFDB00;color:#000000;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</span>
         <span style="font-size:15px;color:#222;">Assiste ao Forjado da Semana</span>
       </div>
       <div class="card-step--white">
-        <span style="width:32px;height:32px;border-radius:50%;background:#FFDB00;color:#010A1F;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">5</span>
+        <span style="width:32px;height:32px;border-radius:50%;background:#FFDB00;color:#000000;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">5</span>
         <span style="font-size:15px;color:#222;">Escolhe um ponto da operação para ajustar primeiro</span>
       </div>
     </div>
     <span class="gap-lg"></span>
-    <div style="background:#010A1F;border-radius:16px;padding:22px 24px;">
+    <div style="background:#000000;border-radius:16px;padding:22px 24px;">
       <p style="font-weight:700;font-size:17px;color:#FFDB00;line-height:1.5;">O objetivo não é consumir mais conteúdo. É tirar peso das suas costas.</p>
     </div>
   </div>
@@ -485,21 +485,21 @@
       <div class="card-step--white">
         <span class="step-num">01</span>
         <div>
-          <h3 style="color:#010A1F;font-size:17px;font-weight:700;margin-bottom:6px;">Você entra</h3>
+          <h3 style="color:#000000;font-size:17px;font-weight:700;margin-bottom:6px;">Você entra</h3>
           <p style="font-size:15px;color:#555;line-height:1.65;">Recebe acesso à área de membros na Hotmart Club e aos grupos do WhatsApp.</p>
         </div>
       </div>
       <div class="card-step--white">
         <span class="step-num">02</span>
         <div>
-          <h3 style="color:#010A1F;font-size:17px;font-weight:700;margin-bottom:6px;">Você acompanha o ritmo</h3>
+          <h3 style="color:#000000;font-size:17px;font-weight:700;margin-bottom:6px;">Você acompanha o ritmo</h3>
           <p style="font-size:15px;color:#555;line-height:1.65;">Toda semana tem conteúdo. Todo dia tem Brasa. Todo mês tem caso real.</p>
         </div>
       </div>
       <div class="card-step--white">
         <span class="step-num">03</span>
         <div>
-          <h3 style="color:#010A1F;font-size:17px;font-weight:700;margin-bottom:6px;">Você aplica</h3>
+          <h3 style="color:#000000;font-size:17px;font-weight:700;margin-bottom:6px;">Você aplica</h3>
           <p style="font-size:15px;color:#555;line-height:1.65;">O Guilherme entrega direção prática. Você aplica no ponto da empresa que está mais pesado agora.</p>
         </div>
       </div>
@@ -590,7 +590,7 @@
     <div class="body-text body-text--dark">
       <p>Você tem 7 dias para acessar a estrutura, conhecer a comunidade e sentir se o Forjados é para o seu momento.</p>
       <p>Se não fizer sentido, basta pedir o cancelamento dentro do prazo.</p>
-      <p><strong style="color:#010A1F;">Sem teatro. Sem enrolação.</strong></p>
+      <p><strong style="color:#000000;">Sem teatro. Sem enrolação.</strong></p>
     </div>
   </div>
 </section>
@@ -604,7 +604,7 @@
 </section>
 
 <!-- ══ 18. CTA FINAL ═════════════════════════════════════ -->
-<section class="section" style="background:linear-gradient(180deg,#010A1F 0%,#000314 100%);padding:100px 20px;">
+<section class="section" style="background:linear-gradient(180deg,#000000 0%,#000000 100%);padding:100px 20px;">
   <div class="inner">
     <!-- Logo -->
     <div style="margin-bottom:28px;">
