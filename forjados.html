@@ -80,7 +80,8 @@
     justify-content: center;
     text-align: center;
     padding: 80px 20px;
-    background: linear-gradient(180deg, rgba(1,10,31,0.55) 0%, rgba(1,10,31,0.85) 100%), #010A1F;
+    background: linear-gradient(180deg, rgba(1,10,31,0.55) 0%, rgba(1,10,31,0.88) 100%),
+                url('guilherme-hero.jpg') center center / cover no-repeat;
     position: relative;
     overflow: hidden;
   }
@@ -453,18 +454,27 @@
 </section>
 
 <!-- ══ 11. PARA QUEM NÃO É ══════════════════════════════ -->
-<section class="section bg-navy2">
-  <div class="inner">
-    <h2 class="h2">Não entre se você quer <span class="gold">só assistir conteúdo.</span></h2>
-    <span class="gap-md"></span>
-    <div class="body-text">
-      <p>O Forjados não é para quem quer terceirizar responsabilidade.</p>
-      <p>Não é para quem quer motivação para aguentar mais caos.</p>
-      <p>Não é para quem quer parecer dono, mas fugir das conversas difíceis.</p>
-      <p style="font-weight:700;color:#FFDB00;">É para quem quer aplicar.</p>
+<section class="section bg-navy2" style="padding:0;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;min-height:420px;">
+    <img src="guilherme-laptop.jpg" alt="Guilherme Cristofore" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"
+      onerror="this.style.display='none';this.parentElement.style.gridTemplateColumns='1fr';" />
+    <div style="display:flex;flex-direction:column;justify-content:center;padding:60px 40px;text-align:center;">
+      <h2 class="h2" style="font-size:clamp(22px,4vw,36px);margin-bottom:24px;">Não entre se você quer <span class="gold">só assistir conteúdo.</span></h2>
+      <div class="body-text">
+        <p>O Forjados não é para quem quer terceirizar responsabilidade.</p>
+        <p>Não é para quem quer motivação para aguentar mais caos.</p>
+        <p>Não é para quem quer parecer dono, mas fugir das conversas difíceis.</p>
+        <p style="font-weight:700;color:#FFDB00;">É para quem quer aplicar.</p>
+      </div>
     </div>
   </div>
 </section>
+<style>
+@media(max-width:640px){
+  #nao-e-grid { grid-template-columns: 1fr !important; }
+  #nao-e-grid img { max-height: 280px; }
+}
+</style>
 
 <!-- ══ 12. COMO FUNCIONA ══════════════════════════════════ -->
 <section class="section bg-white">
@@ -498,24 +508,22 @@
 </section>
 
 <!-- ══ 13. AUTORIDADE ════════════════════════════════════ -->
-<section class="section bg-navy">
+<section class="section bg-navy" style="padding-bottom:0;">
   <div class="inner">
     <h2 class="h2">Com <span class="gold">Guilherme Cristofore.</span></h2>
-    <span class="gap-lg"></span>
-    <!-- Foto do Guilherme -->
-    <div style="margin-bottom:32px;">
-      <img src="guilherme.jpg" alt="Guilherme Cristofore" class="photo-real"
-        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-      <div class="photo-placeholder" style="display:none;">
-        <span class="icon">📸</span>
-        <span>Foto do Guilherme<br><small>Coloque <strong>guilherme.jpg</strong> na mesma pasta</small></span>
-      </div>
-    </div>
+    <span class="gap-md"></span>
     <div class="body-text">
       <p>Guilherme empreende desde cedo, construiu empresas reais, errou em decisões reais e aprendeu liderança no lugar onde ela mais cobra: na prática.</p>
       <p>Nos Forjados, ele não fala de cima do palco.</p>
       <p>Ele senta do seu lado e mostra o que fez, o que não faria de novo e como você pode evitar pagar caro por erros que já foram pagos antes.</p>
     </div>
+  </div>
+  <!-- Fotos em grid abaixo do texto -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:48px;max-height:520px;overflow:hidden;">
+    <img src="guilherme-sofa.jpg" alt="Guilherme Cristofore" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"
+      onerror="this.style.display='none';" />
+    <img src="guilherme-autoridade.jpg" alt="Guilherme Cristofore" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"
+      onerror="this.style.display='none';" />
   </div>
 </section>
 
