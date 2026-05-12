@@ -80,8 +80,8 @@
     justify-content: flex-end;
     text-align: center;
     padding: 60px 20px 80px;
-    background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.75) 55%, rgba(0,0,0,0.92) 100%),
-                url('guilherme-hero.jpg') center top / cover no-repeat;
+    background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.72) 55%, rgba(0,0,0,0.92) 100%),
+                url('img-hero-road.jpg') center center / cover no-repeat;
     position: relative;
     overflow: hidden;
   }
@@ -386,8 +386,9 @@
 </section>
 
 <!-- ══ 8. POR QUE FUNCIONA ════════════════════════════════ -->
-<section class="section bg-navy">
-  <div class="inner">
+<section class="section bg-navy" style="position:relative;overflow:hidden;">
+  <img src="img-brasa-coals.jpg" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.12;z-index:0;pointer-events:none;" onerror="this.style.display='none';">
+  <div class="inner" style="position:relative;z-index:1;">
     <h2 class="h2 gold">A Forja Anti-Caos.</h2>
     <span class="gap-sm"></span>
     <p class="body-text" style="color:rgba(250,250,255,.65);">O Forjados tira você do improviso em 3 movimentos:</p>
@@ -464,19 +465,28 @@
 
 <!-- ══ 10. PARA QUEM É ════════════════════════════════════ -->
 <section class="section bg-navy">
-  <div class="inner">
-    <h2 class="h2">É para você <span class="gold">se…</span></h2>
-    <span class="gap-lg"></span>
-    <ul class="pill-list">
-      <li><span class="pill-mark">✓</span> Está começando e quer construir certo desde o início.</li>
-      <li><span class="pill-mark">✓</span> Está recomeçando depois de um erro, uma sociedade ruim ou um negócio que não foi.</li>
-      <li><span class="pill-mark">✓</span> Já tem empresa, mas ainda carrega tudo sozinho.</li>
-      <li><span class="pill-mark">✓</span> Vive apagando incêndio e quer virar dono de verdade.</li>
-      <li><span class="pill-mark">✓</span> Quer liderar melhor sem cair em papo corporativo vazio.</li>
-    </ul>
-    <span class="gap-lg"></span>
-    <div class="btn-wrap">
-      <a href="https://pay.hotmart.com/S105668941Q" target="_blank" class="btn">Quero entrar nos Forjados</a>
+  <div class="inner--wide">
+    <div style="display:flex;align-items:center;gap:40px;flex-wrap:wrap;">
+      <div style="flex:1 1 260px;text-align:left;">
+        <h2 class="h2" style="text-align:left;">É para você <span class="gold">se…</span></h2>
+        <span class="gap-lg"></span>
+        <ul class="pill-list" style="text-align:left;">
+          <li><span class="pill-mark">✓</span> Está começando e quer construir certo desde o início.</li>
+          <li><span class="pill-mark">✓</span> Está recomeçando depois de um erro, uma sociedade ruim ou um negócio que não foi.</li>
+          <li><span class="pill-mark">✓</span> Já tem empresa, mas ainda carrega tudo sozinho.</li>
+          <li><span class="pill-mark">✓</span> Vive apagando incêndio e quer virar dono de verdade.</li>
+          <li><span class="pill-mark">✓</span> Quer liderar melhor sem cair em papo corporativo vazio.</li>
+        </ul>
+        <span class="gap-lg"></span>
+        <div class="btn-wrap" style="justify-content:flex-start;">
+          <a href="https://pay.hotmart.com/S105668941Q" target="_blank" class="btn">Quero entrar nos Forjados</a>
+        </div>
+      </div>
+      <div style="flex:0 0 auto;width:220px;">
+        <img src="img-paraquem-stressed.jpg" alt=""
+          style="width:220px;height:300px;object-fit:cover;object-position:center top;border-radius:14px;display:block;opacity:0.88;"
+          onerror="this.style.display='none';" />
+      </div>
     </div>
   </div>
 </section>
@@ -503,6 +513,9 @@
 <!-- ══ 12. COMO FUNCIONA ══════════════════════════════════ -->
 <section class="section bg-white">
   <div class="inner">
+    <img src="img-icons-como-funciona.jpg" alt=""
+      style="width:100%;max-width:300px;border-radius:14px;margin:0 auto 32px;display:block;"
+      onerror="this.style.display='none';" />
     <h2 class="h2 h2--dark">Simples, direto e sem barulho.</h2>
     <span class="gap-lg"></span>
     <div style="display:flex;flex-direction:column;gap:14px;">
@@ -540,8 +553,8 @@
   <div class="inner">
     <div style="display:flex;align-items:center;gap:32px;flex-wrap:wrap;">
       <div style="flex:0 0 auto;width:180px;">
-        <img src="guilherme-sofa.jpg" alt="Guilherme Cristofore"
-          style="width:180px;height:240px;object-fit:cover;object-position:center 15%;border-radius:10px;display:block;"
+        <img src="img-autoridade-novo.jpg" alt="Guilherme Cristofore"
+          style="width:180px;height:240px;object-fit:cover;object-position:center top;border-radius:10px;display:block;"
           onerror="this.style.display='none';" />
       </div>
       <div style="flex:1 1 240px;">
@@ -562,8 +575,9 @@
 </section>
 
 <!-- ══ 14+15. OFERTA + STACK ══════════════════════════════ -->
-<section class="section bg-navy">
-  <div class="inner--wide">
+<section class="section bg-navy" style="position:relative;overflow:hidden;">
+  <img src="img-oferta-forge.jpg" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.10;z-index:0;pointer-events:none;" onerror="this.style.display='none';">
+  <div class="inner--wide" style="position:relative;z-index:1;">
     <h2 class="h2">Entre como <span class="gold">fundador dos Forjados.</span></h2>
     <span class="gap-sm"></span>
     <p class="body-text" style="color:rgba(255,255,255,.45);">Depois da janela de fundador, o mensal passa para R$ 37/mês.</p>
@@ -616,9 +630,11 @@
 </section>
 
 <!-- ══ 16. GARANTIA ══════════════════════════════════════ -->
-<section class="section bg-offwhite">
-  <div class="inner">
-    <div class="guarantee-icon">🛡️</div>
+<section class="section bg-offwhite" style="position:relative;overflow:hidden;">
+  <img src="img-garantia-shield.jpg" aria-hidden="true" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:380px;height:380px;object-fit:contain;opacity:0.07;z-index:0;pointer-events:none;" onerror="this.style.display='none';">
+  <div class="inner" style="position:relative;z-index:1;">
+    <img src="img-garantia-shield.jpg" alt="" style="width:80px;height:80px;object-fit:contain;margin:0 auto 20px;display:block;border-radius:8px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+    <div class="guarantee-icon" style="display:none;">🛡️</div>
     <h2 class="h2 h2--dark">Entre, veja por dentro e decida com calma.</h2>
     <span class="gap-md"></span>
     <div class="body-text body-text--dark">
@@ -646,7 +662,7 @@
 </section>
 
 <!-- ══ 18. CTA FINAL ═════════════════════════════════════ -->
-<section class="section" style="background:linear-gradient(180deg,#000000 0%,#000000 100%);padding:100px 20px;">
+<section class="section" style="background:linear-gradient(180deg,rgba(0,0,0,0.70) 0%,rgba(0,0,0,0.82) 100%),url('img-cta-spotlight.jpg') center/cover no-repeat;padding:100px 20px;">
   <div class="inner">
     <!-- Logo -->
     <div style="margin-bottom:28px;">
