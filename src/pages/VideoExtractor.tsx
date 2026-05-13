@@ -13,7 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { VideoUploader } from '@/components/VideoUploader';
 import { processVideoFrames, OcrResult } from '@/lib/ocr';
-import { transcribeVideo, TranscriptionResult } from '@/lib/transcription';
+import { transcribeVideo, TranscriptionResult, TranscriptionProvider } from '@/lib/transcription';
 
 type Step = 'upload' | 'config' | 'processing' | 'results';
 
@@ -65,7 +65,10 @@ function buildCombinedOutput(
 export default function VideoExtractor() {
   const [step, setStep] = useState<Step>('upload');
   const [videoFile, setVideoFile] = useState<File | null>(null);
-  const [apiKey, setApiKey] = useState(() => localStorage.getItem('openai_api_key') ?? '');
+  const [provider, setProvider] = useState<TranscriptionProvider>(() =>
+    (localStorage.getItem('transcription_provider') as TranscriptionProvider) ?? 'groq'
+  );
+  const [apiKey, setApiKey] = useState(() => localStorage.getItem(`${provider}_api_key`) ?? '');
   const [language, setLanguage] = useState('pt');
   const [frameInterval, setFrameInterval] = useState(3);
   const [doTranscription, setDoTranscription] = useState(true);
@@ -94,9 +97,15 @@ export default function VideoExtractor() {
     setStep('upload');
   };
 
+  const handleProviderChange = (p: TranscriptionProvider) => {
+    setProvider(p);
+    localStorage.setItem('transcription_provider', p);
+    setApiKey(localStorage.getItem(`${p}_api_key`) ?? '');
+  };
+
   const handleApiKeyChange = (v: string) => {
     setApiKey(v);
-    localStorage.setItem('openai_api_key', v);
+    localStorage.setItem(`${provider}_api_key`, v);
   };
 
   const handleProcess = useCallback(async () => {
@@ -116,7 +125,7 @@ export default function VideoExtractor() {
       ? (async () => {
           setTranscribing(true);
           try {
-            const result = await transcribeVideo(videoFile, apiKey, language === 'auto' ? undefined : language);
+            const result = await transcribeVideo(videoFile, apiKey, provider, language === 'auto' ? undefined : language);
             setTranscriptionResult(result);
           } catch (e) {
             errs.push(`Transcrição: ${(e as Error).message}`);
@@ -298,23 +307,71 @@ export default function VideoExtractor() {
                 </div>
               )}
 
-              {/* API Key */}
+              {/* Provider + API Key */}
               {doTranscription && (
-                <div>
-                  <Label htmlFor="apikey" style={{ fontSize: 11, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
-                    Chave de API OpenAI (Whisper)
-                  </Label>
-                  <Input
-                    id="apikey"
-                    type="password"
-                    placeholder="sk-..."
-                    value={apiKey}
-                    onChange={e => handleApiKeyChange(e.target.value)}
-                    style={{ marginTop: 8, fontFamily: 'monospace', background: '#fff', color: '#1a1a1a', borderColor: '#d1d5db' }}
-                  />
-                  <p style={{ fontSize: 12, color: '#9ca3af', marginTop: 4 }}>
-                    Necessária para transcrição. Salva apenas no seu navegador.
-                  </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+
+                  {/* Provider selector */}
+                  <div>
+                    <p style={{ fontSize: 11, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600, marginBottom: 8 }}>
+                      Serviço de transcrição
+                    </p>
+                    <div style={{ display: 'flex', gap: 10 }}>
+                      <button
+                        onClick={() => handleProviderChange('groq')}
+                        style={{
+                          flex: 1, padding: '10px 12px', borderRadius: 8, cursor: 'pointer', textAlign: 'left',
+                          border: `2px solid ${provider === 'groq' ? '#16a34a' : '#d1d5db'}`,
+                          background: provider === 'groq' ? '#f0fdf4' : '#fff',
+                        }}
+                      >
+                        <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: provider === 'groq' ? '#15803d' : '#374151' }}>
+                          Groq ✓ Gratuito
+                        </p>
+                        <p style={{ margin: '2px 0 0', fontSize: 12, color: '#6b7280' }}>
+                          8h de áudio/dia — recomendado
+                        </p>
+                      </button>
+                      <button
+                        onClick={() => handleProviderChange('openai')}
+                        style={{
+                          flex: 1, padding: '10px 12px', borderRadius: 8, cursor: 'pointer', textAlign: 'left',
+                          border: `2px solid ${provider === 'openai' ? '#2563eb' : '#d1d5db'}`,
+                          background: provider === 'openai' ? '#eff6ff' : '#fff',
+                        }}
+                      >
+                        <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: provider === 'openai' ? '#1d4ed8' : '#374151' }}>
+                          OpenAI
+                        </p>
+                        <p style={{ margin: '2px 0 0', fontSize: 12, color: '#6b7280' }}>
+                          Pago — ~U$0,006/min
+                        </p>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* API Key field */}
+                  <div>
+                    <Label htmlFor="apikey" style={{ fontSize: 11, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
+                      {provider === 'groq' ? 'Chave de API Groq' : 'Chave de API OpenAI'}
+                    </Label>
+                    {provider === 'groq' && (
+                      <p style={{ fontSize: 12, color: '#16a34a', marginTop: 4, marginBottom: 6 }}>
+                        Crie uma conta gratuita em <strong>console.groq.com</strong> → API Keys → Create API Key
+                      </p>
+                    )}
+                    <Input
+                      id="apikey"
+                      type="password"
+                      placeholder="gsk_... ou sk-..."
+                      value={apiKey}
+                      onChange={e => handleApiKeyChange(e.target.value)}
+                      style={{ marginTop: 4, fontFamily: 'monospace', background: '#fff', color: '#1a1a1a', borderColor: '#d1d5db' }}
+                    />
+                    <p style={{ fontSize: 12, color: '#9ca3af', marginTop: 4 }}>
+                      Salva apenas no seu navegador.
+                    </p>
+                  </div>
                 </div>
               )}
             </div>
