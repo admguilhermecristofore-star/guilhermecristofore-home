@@ -22,14 +22,14 @@ const TRANSCRIPTION_LANGS = [
   { label: 'Português', value: 'pt' },
   { label: 'Inglês', value: 'en' },
   { label: 'Espanhol', value: 'es' },
-  { label: 'Detecção automática', value: '' },
+  { label: 'Detecção automática', value: 'auto' },
 ];
 
 const OCR_LANGS: Record<string, string> = {
   pt: 'por',
   en: 'eng',
   es: 'spa',
-  '': 'por+eng',
+  auto: 'por+eng',
 };
 
 function formatTime(seconds: number): string {
@@ -119,7 +119,7 @@ export default function VideoExtractor() {
       ? (async () => {
           setTranscribing(true);
           try {
-            const result = await transcribeVideo(videoFile, apiKey, language || undefined);
+            const result = await transcribeVideo(videoFile, apiKey, language === 'auto' ? undefined : language);
             setTranscriptionResult(result);
           } catch (e) {
             errs.push(`Transcrição: ${(e as Error).message}`);
