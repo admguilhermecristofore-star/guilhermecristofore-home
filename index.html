@@ -217,6 +217,9 @@
   @media(max-width:640px){
     .section { padding: 60px 18px; }
     .btn { padding: 16px 32px; }
+    .autoridade-flex { flex-direction: column; align-items: center; }
+    .autoridade-flex > div { text-align: center !important; }
+    .autoridade-flex .btn-wrap { justify-content: center !important; }
   }
 </style>
 </head>
@@ -549,7 +552,7 @@
 <!-- ══ 13. AUTORIDADE ════════════════════════════════════ -->
 <section class="section bg-navy">
   <div class="inner">
-    <div style="display:flex;align-items:center;gap:32px;flex-wrap:wrap;">
+    <div class="autoridade-flex" style="display:flex;align-items:center;gap:32px;flex-wrap:wrap;">
       <div style="flex:0 0 auto;width:180px;">
         <img src="guilherme-sofa.jpg" alt="Guilherme Cristofore"
           style="width:180px;height:240px;object-fit:cover;object-position:center 15%;border-radius:10px;display:block;"
@@ -628,15 +631,18 @@
 </section>
 
 <!-- ══ 16. GARANTIA ══════════════════════════════════════ -->
-<section class="section bg-offwhite">
+<section class="section bg-navy">
   <div class="inner">
-    <div class="guarantee-icon">🛡️</div>
-    <h2 class="h2 h2--dark">Entre, veja por dentro e decida com calma.</h2>
+    <img src="logo-transparente.png" alt="Forjados"
+      style="max-height:72px;margin:0 auto 28px;display:block;"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+    <div class="guarantee-icon" style="display:none;">🛡️</div>
+    <h2 class="h2">Entre, veja por dentro e <span class="gold">decida com calma.</span></h2>
     <span class="gap-md"></span>
-    <div class="body-text body-text--dark">
+    <div class="body-text">
       <p>Você tem 7 dias para acessar a estrutura, conhecer a comunidade e sentir se o Forjados é para o seu momento.</p>
       <p>Se não fizer sentido, basta pedir o cancelamento dentro do prazo.</p>
-      <p><strong style="color:#000000;">Sem teatro. Sem enrolação.</strong></p>
+      <p><strong style="color:#FFDB00;">Sem teatro. Sem enrolação.</strong></p>
     </div>
     <span class="gap-lg"></span>
     <div class="btn-wrap">
