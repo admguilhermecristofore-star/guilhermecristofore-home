@@ -1,7 +1,5 @@
 import { useCallback, useState } from 'react';
 import { Upload, Film, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 
 const ACCEPTED_TYPES = ['video/mp4', 'video/webm', 'video/ogg', 'video/quicktime', 'video/x-matroska'];
 const MAX_DISPLAY_MB = 500;
@@ -49,41 +47,52 @@ export function VideoUploader({ onFileSelect, selectedFile, onClear }: VideoUplo
   if (selectedFile) {
     const sizeMb = (selectedFile.size / 1024 / 1024).toFixed(1);
     return (
-      <div className="flex items-center gap-3 rounded-xl border border-primary/40 bg-primary/5 px-4 py-3">
-        <Film className="h-6 w-6 shrink-0 text-primary" />
-        <div className="flex-1 min-w-0">
-          <p className="truncate text-sm font-medium">{selectedFile.name}</p>
-          <p className="text-xs text-muted-foreground">{sizeMb} MB</p>
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: 12,
+        background: '#eff6ff', border: '1px solid #bfdbfe',
+        borderRadius: 10, padding: '12px 16px',
+      }}>
+        <Film size={22} color="#2563eb" style={{ flexShrink: 0 }} />
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <p style={{ margin: 0, fontSize: 14, fontWeight: 500, color: '#1e40af', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            {selectedFile.name}
+          </p>
+          <p style={{ margin: 0, fontSize: 12, color: '#6b7280' }}>{sizeMb} MB</p>
         </div>
-        <Button variant="ghost" size="icon" onClick={onClear} className="shrink-0 h-8 w-8">
-          <X className="h-4 w-4" />
-        </Button>
+        <button
+          onClick={onClear}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#9ca3af', flexShrink: 0 }}
+          title="Remover"
+        >
+          <X size={16} />
+        </button>
       </div>
     );
   }
 
   return (
-    <div className="space-y-2">
+    <div>
       <label
         onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
         onDragLeave={() => setDragging(false)}
         onDrop={onDrop}
-        className={cn(
-          'flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed px-6 py-12 cursor-pointer transition-all duration-200',
-          dragging
-            ? 'border-primary bg-primary/10 scale-[1.01]'
-            : 'border-muted-foreground/30 bg-muted/20 hover:border-primary/60 hover:bg-primary/5'
-        )}
+        style={{
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+          gap: 12, borderRadius: 12, padding: '48px 24px', cursor: 'pointer',
+          border: `2px dashed ${dragging ? '#2563eb' : '#d1d5db'}`,
+          background: dragging ? '#eff6ff' : '#fff',
+          transition: 'all 0.2s',
+        }}
       >
-        <Upload className={cn('h-10 w-10 transition-colors', dragging ? 'text-primary' : 'text-muted-foreground')} />
-        <div className="text-center">
-          <p className="text-sm font-medium">Arraste o vídeo aqui</p>
-          <p className="text-xs text-muted-foreground mt-1">ou clique para selecionar</p>
-          <p className="text-xs text-muted-foreground mt-1">MP4, WebM, MOV, MKV — até {MAX_DISPLAY_MB} MB</p>
+        <Upload size={40} color={dragging ? '#2563eb' : '#9ca3af'} />
+        <div style={{ textAlign: 'center' }}>
+          <p style={{ margin: 0, fontSize: 14, fontWeight: 500, color: '#374151' }}>Arraste o vídeo aqui</p>
+          <p style={{ margin: '4px 0 0', fontSize: 13, color: '#9ca3af' }}>ou clique para selecionar</p>
+          <p style={{ margin: '4px 0 0', fontSize: 12, color: '#d1d5db' }}>MP4, WebM, MOV, MKV — até {MAX_DISPLAY_MB} MB</p>
         </div>
-        <input type="file" accept="video/*" className="sr-only" onChange={onInputChange} />
+        <input type="file" accept="video/*" style={{ display: 'none' }} onChange={onInputChange} />
       </label>
-      {error && <p className="text-xs text-destructive">{error}</p>}
+      {error && <p style={{ fontSize: 13, color: '#dc2626', marginTop: 6 }}>{error}</p>}
     </div>
   );
 }

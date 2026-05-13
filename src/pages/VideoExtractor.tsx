@@ -10,7 +10,6 @@ import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Textarea } from '@/components/ui/textarea';
 import { VideoUploader } from '@/components/VideoUploader';
 import { processVideoFrames, OcrResult } from '@/lib/ocr';
@@ -60,7 +59,6 @@ function buildCombinedOutput(
   }
 
   lines.sort((a, b) => a.time - b.time);
-
   return lines.map(l => `[${formatTime(l.time)}] [${l.label}] ${l.text}`).join('\n\n');
 }
 
@@ -81,7 +79,6 @@ export default function VideoExtractor() {
   const [transcriptionResult, setTranscriptionResult] = useState<TranscriptionResult | null>(null);
   const [ocrResults, setOcrResults] = useState<OcrResult[]>([]);
   const [errors, setErrors] = useState<string[]>([]);
-
   const [copied, setCopied] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -161,7 +158,6 @@ export default function VideoExtractor() {
       : Promise.resolve();
 
     await Promise.all([transcriptionPromise, ocrPromise]);
-
     if (errs.length) setErrors(errs);
     setStep('results');
   }, [videoFile, apiKey, language, frameInterval, doTranscription, doOcr]);
@@ -185,117 +181,127 @@ export default function VideoExtractor() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Hidden elements for processing */}
-      <video ref={videoRef} className="sr-only" muted preload="auto" />
-      <canvas ref={canvasRef} className="sr-only" />
+    <div style={{ minHeight: '100vh', backgroundColor: '#f8f9fa', color: '#1a1a1a', fontFamily: 'system-ui, sans-serif' }}>
+      {/* Hidden processing elements */}
+      <video ref={videoRef} style={{ display: 'none' }} muted preload="auto" />
+      <canvas ref={canvasRef} style={{ display: 'none' }} />
 
-      <div className="max-w-3xl mx-auto px-4 py-10 space-y-8">
+      <div style={{ maxWidth: 720, margin: '0 auto', padding: '40px 16px' }}>
+
         {/* Header */}
-        <div className="space-y-1">
-          <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
-            <ScanText className="h-6 w-6 text-primary" />
+        <div style={{ marginBottom: 32 }}>
+          <h1 style={{ fontSize: 24, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8, margin: 0 }}>
+            <ScanText size={24} color="#2563eb" />
             Extrator de Vídeo
           </h1>
-          <p className="text-sm text-muted-foreground">
+          <p style={{ fontSize: 14, color: '#6b7280', marginTop: 4 }}>
             Transcreva áudio e extraia texto visual de vídeos locais.
           </p>
         </div>
 
         {/* Step: Upload */}
         {step === 'upload' && (
-          <div className="space-y-4">
-            <VideoUploader
-              onFileSelect={handleFileSelect}
-              selectedFile={videoFile}
-              onClear={handleClear}
-            />
-          </div>
+          <VideoUploader
+            onFileSelect={handleFileSelect}
+            selectedFile={videoFile}
+            onClear={handleClear}
+          />
         )}
 
         {/* Step: Config */}
         {step === 'config' && videoFile && (
-          <div className="space-y-6">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             <VideoUploader
               onFileSelect={handleFileSelect}
               selectedFile={videoFile}
               onClear={handleClear}
             />
 
-            <div className="rounded-xl border border-border bg-card p-5 space-y-5">
-              <div className="flex items-center gap-2 text-sm font-semibold">
-                <Settings2 className="h-4 w-4 text-primary" />
+            <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, padding: 20 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontWeight: 600, marginBottom: 20, color: '#374151' }}>
+                <Settings2 size={16} color="#2563eb" />
                 Configurações
               </div>
 
               {/* What to extract */}
-              <div className="space-y-2">
-                <Label className="text-xs text-muted-foreground uppercase tracking-wide">O que extrair</Label>
-                <div className="flex flex-wrap gap-3">
+              <div style={{ marginBottom: 20 }}>
+                <p style={{ fontSize: 11, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 8, fontWeight: 600 }}>
+                  O que extrair
+                </p>
+                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
                   <button
                     onClick={() => setDoTranscription(v => !v)}
-                    className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-colors ${
-                      doTranscription
-                        ? 'border-primary bg-primary/10 text-primary'
-                        : 'border-border text-muted-foreground hover:border-primary/50'
-                    }`}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 8,
+                      padding: '8px 14px', borderRadius: 8, fontSize: 14, cursor: 'pointer',
+                      border: `2px solid ${doTranscription ? '#2563eb' : '#d1d5db'}`,
+                      background: doTranscription ? '#eff6ff' : '#fff',
+                      color: doTranscription ? '#2563eb' : '#6b7280',
+                      fontWeight: doTranscription ? 600 : 400,
+                    }}
                   >
-                    <Mic className="h-4 w-4" />
+                    <Mic size={15} />
                     Transcrição de áudio
                   </button>
                   <button
                     onClick={() => setDoOcr(v => !v)}
-                    className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-colors ${
-                      doOcr
-                        ? 'border-primary bg-primary/10 text-primary'
-                        : 'border-border text-muted-foreground hover:border-primary/50'
-                    }`}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 8,
+                      padding: '8px 14px', borderRadius: 8, fontSize: 14, cursor: 'pointer',
+                      border: `2px solid ${doOcr ? '#2563eb' : '#d1d5db'}`,
+                      background: doOcr ? '#eff6ff' : '#fff',
+                      color: doOcr ? '#2563eb' : '#6b7280',
+                      fontWeight: doOcr ? 600 : 400,
+                    }}
                   >
-                    <Eye className="h-4 w-4" />
+                    <Eye size={15} />
                     Texto da tela (OCR)
                   </button>
                 </div>
               </div>
 
               {/* Language */}
-              <div className="space-y-2">
-                <Label htmlFor="language" className="text-xs text-muted-foreground uppercase tracking-wide">Idioma do vídeo</Label>
-                <Select value={language} onValueChange={setLanguage}>
-                  <SelectTrigger id="language" className="w-56">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {TRANSCRIPTION_LANGS.map(l => (
-                      <SelectItem key={l.value} value={l.value}>{l.label}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+              <div style={{ marginBottom: 20 }}>
+                <Label htmlFor="language" style={{ fontSize: 11, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
+                  Idioma do vídeo
+                </Label>
+                <div style={{ marginTop: 8 }}>
+                  <Select value={language} onValueChange={setLanguage}>
+                    <SelectTrigger id="language" style={{ width: 220, background: '#fff', color: '#1a1a1a', borderColor: '#d1d5db' }}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {TRANSCRIPTION_LANGS.map(l => (
+                        <SelectItem key={l.value} value={l.value}>{l.label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
               {/* OCR interval */}
               {doOcr && (
-                <div className="space-y-3">
-                  <Label className="text-xs text-muted-foreground uppercase tracking-wide">
-                    Capturar frame a cada <span className="text-foreground font-semibold">{frameInterval}s</span>
-                  </Label>
+                <div style={{ marginBottom: 20 }}>
+                  <p style={{ fontSize: 11, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600, marginBottom: 8 }}>
+                    Capturar frame a cada{' '}
+                    <span style={{ color: '#1a1a1a', fontWeight: 700 }}>{frameInterval}s</span>
+                  </p>
                   <Slider
-                    min={1}
-                    max={30}
-                    step={1}
+                    min={1} max={30} step={1}
                     value={[frameInterval]}
                     onValueChange={([v]) => setFrameInterval(v)}
-                    className="w-full max-w-xs"
+                    style={{ maxWidth: 280 }}
                   />
-                  <p className="text-xs text-muted-foreground">
-                    Intervalo menor = mais precisão, mas mais lento. Para slides, 5–10s costuma ser suficiente.
+                  <p style={{ fontSize: 12, color: '#9ca3af', marginTop: 6 }}>
+                    Para slides, 5–10s costuma ser suficiente.
                   </p>
                 </div>
               )}
 
-              {/* API key */}
+              {/* API Key */}
               {doTranscription && (
-                <div className="space-y-2">
-                  <Label htmlFor="apikey" className="text-xs text-muted-foreground uppercase tracking-wide">
+                <div>
+                  <Label htmlFor="apikey" style={{ fontSize: 11, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
                     Chave de API OpenAI (Whisper)
                   </Label>
                   <Input
@@ -304,34 +310,38 @@ export default function VideoExtractor() {
                     placeholder="sk-..."
                     value={apiKey}
                     onChange={e => handleApiKeyChange(e.target.value)}
-                    className="font-mono text-sm"
+                    style={{ marginTop: 8, fontFamily: 'monospace', background: '#fff', color: '#1a1a1a', borderColor: '#d1d5db' }}
                   />
-                  <p className="text-xs text-muted-foreground">
-                    Necessária para transcrição. A chave fica salva apenas no navegador e nunca é enviada a servidores desta aplicação.
+                  <p style={{ fontSize: 12, color: '#9ca3af', marginTop: 4 }}>
+                    Necessária para transcrição. Salva apenas no seu navegador.
                   </p>
                 </div>
               )}
             </div>
 
-            {(!doTranscription && !doOcr) && (
-              <Alert variant="destructive">
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>Selecione ao menos uma extração.</AlertDescription>
-              </Alert>
+            {!doTranscription && !doOcr && (
+              <div style={{ background: '#fef2f2', border: '1px solid #fca5a5', borderRadius: 8, padding: '12px 16px', color: '#dc2626', fontSize: 14, display: 'flex', alignItems: 'center', gap: 8 }}>
+                <AlertCircle size={16} />
+                Selecione ao menos uma extração.
+              </div>
             )}
 
-            <Button
-              size="lg"
-              className="w-full"
+            <button
               disabled={(!doTranscription && !doOcr) || (doTranscription && !apiKey)}
               onClick={handleProcess}
+              style={{
+                width: '100%', padding: '14px', borderRadius: 10, fontSize: 15, fontWeight: 600,
+                background: (!doTranscription && !doOcr) || (doTranscription && !apiKey) ? '#9ca3af' : '#2563eb',
+                color: '#fff', border: 'none', cursor: (!doTranscription && !doOcr) || (doTranscription && !apiKey) ? 'not-allowed' : 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+              }}
             >
-              <Play className="h-4 w-4 mr-2" />
+              <Play size={16} />
               Processar vídeo
-            </Button>
+            </button>
 
             {doTranscription && !apiKey && (
-              <p className="text-xs text-destructive text-center">
+              <p style={{ textAlign: 'center', fontSize: 13, color: '#dc2626' }}>
                 Informe a chave de API para transcrever o áudio.
               </p>
             )}
@@ -340,41 +350,42 @@ export default function VideoExtractor() {
 
         {/* Step: Processing */}
         {step === 'processing' && (
-          <div className="rounded-xl border border-border bg-card p-6 space-y-6">
-            <p className="text-sm font-medium">Processando...</p>
+          <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, padding: 24 }}>
+            <p style={{ fontWeight: 600, marginBottom: 20, color: '#374151' }}>Processando...</p>
 
             {doTranscription && (
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="flex items-center gap-2">
-                    <Mic className="h-4 w-4 text-primary" />
+              <div style={{ marginBottom: 20 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8, fontSize: 14, color: '#374151' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <Mic size={15} color="#2563eb" />
                     Transcrição de áudio
                   </span>
                   {transcribing
-                    ? <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                    ? <Loader2 size={15} color="#9ca3af" className="animate-spin" />
                     : transcriptionDone
-                      ? <CheckCheck className="h-4 w-4 text-green-500" />
-                      : null
-                  }
+                      ? <CheckCheck size={15} color="#16a34a" />
+                      : null}
                 </div>
-                <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
-                  <div
-                    className={`h-full rounded-full transition-all duration-300 ${
-                      transcriptionDone ? 'bg-green-500 w-full' : 'bg-primary w-1/2 animate-pulse'
-                    }`}
-                  />
+                <div style={{ height: 8, background: '#e5e7eb', borderRadius: 99, overflow: 'hidden' }}>
+                  <div style={{
+                    height: '100%', borderRadius: 99,
+                    background: transcriptionDone ? '#16a34a' : '#2563eb',
+                    width: transcriptionDone ? '100%' : '50%',
+                    transition: 'width 0.3s',
+                    animation: !transcriptionDone ? 'pulse 1.5s infinite' : undefined,
+                  }} />
                 </div>
               </div>
             )}
 
             {doOcr && (
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="flex items-center gap-2">
-                    <Eye className="h-4 w-4 text-primary" />
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8, fontSize: 14, color: '#374151' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <Eye size={15} color="#2563eb" />
                     Leitura de texto na tela (OCR)
                   </span>
-                  <span className="text-xs text-muted-foreground">{ocrProgress}%</span>
+                  <span style={{ fontSize: 12, color: '#9ca3af' }}>{ocrProgress}%</span>
                 </div>
                 <Progress value={ocrProgress} className="h-2" />
               </div>
@@ -384,113 +395,103 @@ export default function VideoExtractor() {
 
         {/* Step: Results */}
         {step === 'results' && (
-          <div className="space-y-4">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <button
               onClick={() => setStep('config')}
-              className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+              style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 13, color: '#6b7280', background: 'none', border: 'none', cursor: 'pointer', padding: 0, alignSelf: 'flex-start' }}
             >
-              <ChevronLeft className="h-3 w-3" />
+              <ChevronLeft size={14} />
               Voltar às configurações
             </button>
 
             {errors.length > 0 && (
-              <Alert variant="destructive">
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>
-                  <ul className="space-y-1">
-                    {errors.map((e, i) => <li key={i}>{e}</li>)}
-                  </ul>
-                </AlertDescription>
-              </Alert>
+              <div style={{ background: '#fef2f2', border: '1px solid #fca5a5', borderRadius: 8, padding: '12px 16px' }}>
+                {errors.map((e, i) => (
+                  <p key={i} style={{ color: '#dc2626', fontSize: 14 }}>{e}</p>
+                ))}
+              </div>
             )}
 
             <Tabs defaultValue="combined">
-              <TabsList className="w-full">
-                <TabsTrigger value="combined" className="flex-1">
-                  <FileText className="h-3.5 w-3.5 mr-1.5" />
+              <TabsList style={{ width: '100%', background: '#f3f4f6' }}>
+                <TabsTrigger value="combined" style={{ flex: 1 }}>
+                  <FileText size={14} style={{ marginRight: 6 }} />
                   Combinado
                 </TabsTrigger>
                 {transcriptionResult && (
-                  <TabsTrigger value="transcription" className="flex-1">
-                    <Mic className="h-3.5 w-3.5 mr-1.5" />
+                  <TabsTrigger value="transcription" style={{ flex: 1 }}>
+                    <Mic size={14} style={{ marginRight: 6 }} />
                     Transcrição
                   </TabsTrigger>
                 )}
                 {ocrResults.length > 0 && (
-                  <TabsTrigger value="ocr" className="flex-1">
-                    <Eye className="h-3.5 w-3.5 mr-1.5" />
+                  <TabsTrigger value="ocr" style={{ flex: 1 }}>
+                    <Eye size={14} style={{ marginRight: 6 }} />
                     Tela ({ocrResults.length})
                   </TabsTrigger>
                 )}
               </TabsList>
 
-              {/* Combined */}
-              <TabsContent value="combined" className="mt-4 space-y-3">
+              <TabsContent value="combined" style={{ marginTop: 16 }}>
                 {combinedText ? (
-                  <>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                     <ResultActions
                       onCopy={() => copyToClipboard(combinedText)}
                       onDownload={() => downloadText(combinedText, `${videoFile?.name ?? 'video'}_extracao.txt`)}
                       copied={copied}
                     />
-                    <Textarea
-                      readOnly
-                      value={combinedText}
-                      className="font-mono text-xs min-h-[400px] resize-y"
-                    />
-                  </>
+                    <Textarea readOnly value={combinedText} style={{ fontFamily: 'monospace', fontSize: 12, minHeight: 400, background: '#fff', color: '#1a1a1a', borderColor: '#d1d5db' }} />
+                  </div>
                 ) : (
                   <EmptyState message="Nenhum conteúdo extraído." />
                 )}
               </TabsContent>
 
-              {/* Transcription */}
               {transcriptionResult && (
-                <TabsContent value="transcription" className="mt-4 space-y-3">
-                  <ResultActions
-                    onCopy={() => copyToClipboard(transcriptionResult.fullText)}
-                    onDownload={() => downloadText(transcriptionResult.fullText, `${videoFile?.name ?? 'video'}_transcricao.txt`)}
-                    copied={copied}
-                  />
-                  {transcriptionResult.segments.length > 0 ? (
-                    <div className="space-y-2 max-h-[500px] overflow-y-auto pr-1">
-                      {transcriptionResult.segments.map((seg, i) => (
-                        <div key={i} className="flex gap-3 text-sm">
-                          <span className="shrink-0 text-xs text-muted-foreground font-mono w-12 pt-0.5">
-                            {formatTime(seg.start)}
-                          </span>
-                          <p className="flex-1">{seg.text}</p>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <Textarea
-                      readOnly
-                      value={transcriptionResult.fullText}
-                      className="font-mono text-xs min-h-[400px] resize-y"
+                <TabsContent value="transcription" style={{ marginTop: 16 }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                    <ResultActions
+                      onCopy={() => copyToClipboard(transcriptionResult.fullText)}
+                      onDownload={() => downloadText(transcriptionResult.fullText, `${videoFile?.name ?? 'video'}_transcricao.txt`)}
+                      copied={copied}
                     />
-                  )}
+                    {transcriptionResult.segments.length > 0 ? (
+                      <div style={{ maxHeight: 500, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                        {transcriptionResult.segments.map((seg, i) => (
+                          <div key={i} style={{ display: 'flex', gap: 12, fontSize: 14, color: '#1a1a1a' }}>
+                            <span style={{ flexShrink: 0, fontFamily: 'monospace', fontSize: 12, color: '#9ca3af', paddingTop: 2, width: 48 }}>
+                              {formatTime(seg.start)}
+                            </span>
+                            <p style={{ flex: 1, margin: 0 }}>{seg.text}</p>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <Textarea readOnly value={transcriptionResult.fullText} style={{ fontFamily: 'monospace', fontSize: 12, minHeight: 400, background: '#fff', color: '#1a1a1a', borderColor: '#d1d5db' }} />
+                    )}
+                  </div>
                 </TabsContent>
               )}
 
-              {/* OCR */}
               {ocrResults.length > 0 && (
-                <TabsContent value="ocr" className="mt-4 space-y-3">
-                  <ResultActions
-                    onCopy={() => copyToClipboard(ocrResults.map(r => `[${formatTime(r.timestamp)}]\n${r.text}`).join('\n\n---\n\n'))}
-                    onDownload={() => downloadText(
-                      ocrResults.map(r => `[${formatTime(r.timestamp)}]\n${r.text}`).join('\n\n---\n\n'),
-                      `${videoFile?.name ?? 'video'}_ocr.txt`
-                    )}
-                    copied={copied}
-                  />
-                  <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
-                    {ocrResults.map((r, i) => (
-                      <div key={i} className="rounded-lg border border-border bg-muted/30 p-3 space-y-1">
-                        <span className="text-xs text-muted-foreground font-mono">{formatTime(r.timestamp)}</span>
-                        <p className="text-sm whitespace-pre-wrap">{r.text}</p>
-                      </div>
-                    ))}
+                <TabsContent value="ocr" style={{ marginTop: 16 }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                    <ResultActions
+                      onCopy={() => copyToClipboard(ocrResults.map(r => `[${formatTime(r.timestamp)}]\n${r.text}`).join('\n\n---\n\n'))}
+                      onDownload={() => downloadText(
+                        ocrResults.map(r => `[${formatTime(r.timestamp)}]\n${r.text}`).join('\n\n---\n\n'),
+                        `${videoFile?.name ?? 'video'}_ocr.txt`
+                      )}
+                      copied={copied}
+                    />
+                    <div style={{ maxHeight: 500, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                      {ocrResults.map((r, i) => (
+                        <div key={i} style={{ background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: 8, padding: '10px 14px' }}>
+                          <span style={{ fontFamily: 'monospace', fontSize: 12, color: '#9ca3af' }}>{formatTime(r.timestamp)}</span>
+                          <p style={{ margin: '4px 0 0', fontSize: 14, whiteSpace: 'pre-wrap', color: '#1a1a1a' }}>{r.text}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </TabsContent>
               )}
@@ -502,21 +503,15 @@ export default function VideoExtractor() {
   );
 }
 
-function ResultActions({
-  onCopy, onDownload, copied,
-}: {
-  onCopy: () => void;
-  onDownload: () => void;
-  copied: boolean;
-}) {
+function ResultActions({ onCopy, onDownload, copied }: { onCopy: () => void; onDownload: () => void; copied: boolean }) {
   return (
-    <div className="flex gap-2 justify-end">
-      <Button variant="outline" size="sm" onClick={onCopy}>
-        {copied ? <CheckCheck className="h-3.5 w-3.5 mr-1.5 text-green-500" /> : <Copy className="h-3.5 w-3.5 mr-1.5" />}
+    <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+      <Button variant="outline" size="sm" onClick={onCopy} style={{ background: '#fff', color: '#374151', borderColor: '#d1d5db' }}>
+        {copied ? <CheckCheck size={14} style={{ marginRight: 6, color: '#16a34a' }} /> : <Copy size={14} style={{ marginRight: 6 }} />}
         {copied ? 'Copiado!' : 'Copiar'}
       </Button>
-      <Button variant="outline" size="sm" onClick={onDownload}>
-        <Download className="h-3.5 w-3.5 mr-1.5" />
+      <Button variant="outline" size="sm" onClick={onDownload} style={{ background: '#fff', color: '#374151', borderColor: '#d1d5db' }}>
+        <Download size={14} style={{ marginRight: 6 }} />
         Baixar .txt
       </Button>
     </div>
@@ -525,9 +520,9 @@ function ResultActions({
 
 function EmptyState({ message }: { message: string }) {
   return (
-    <div className="flex flex-col items-center justify-center py-16 text-muted-foreground gap-2">
-      <FileText className="h-8 w-8 opacity-30" />
-      <p className="text-sm">{message}</p>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '60px 0', color: '#9ca3af', gap: 8 }}>
+      <FileText size={32} color="#d1d5db" />
+      <p style={{ fontSize: 14 }}>{message}</p>
     </div>
   );
 }
