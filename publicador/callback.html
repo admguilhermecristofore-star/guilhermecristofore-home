@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Publicador Forja – Autorização</title>
+<style>body{font-family:system-ui,sans-serif;max-width:640px;margin:48px auto;padding:0 16px;color:#222;background:#fff}code{display:block;word-break:break-all;background:#f3f3f3;padding:12px;border-radius:6px;margin:8px 0}button{padding:8px 14px;border:0;border-radius:6px;background:#e8622c;color:#fff;cursor:pointer}</style></head>
+<body>
+<h1>Publicador Forja</h1>
+<div id="out"><p>Processando autorização…</p></div>
+<script>
+const p=new URLSearchParams(location.search),o=document.getElementById('out');
+if(p.get('error')){o.innerHTML='<p>A autorização não foi concluída: '+(p.get('error_description')||p.get('error')).replace(/</g,'&lt;')+'</p>';}
+else if(p.get('code')){o.innerHTML='<p>Autorização recebida. Copie o código abaixo e cole no robô (ele expira em poucos minutos).</p><code id="c"></code><button id="b">Copiar código</button>';
+document.getElementById('c').textContent=p.get('code');
+document.getElementById('b').onclick=()=>{navigator.clipboard.writeText(p.get('code'));document.getElementById('b').textContent='Copiado!';};}
+else{o.innerHTML='<p>Esta página recebe a autorização do TikTok para o Publicador Forja. Nenhum dado é armazenado aqui.</p>';}
+</script>
+</body></html>
